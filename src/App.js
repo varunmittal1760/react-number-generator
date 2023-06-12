@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
 
 function App() {
+  const [on, setOn] = useState(false);
+  const [arr, setArr] = useState([]);
+
+  console.log(on, arr);
+
+  const generateRandomNumber = () => {
+    const newRandomNumber = Math.floor(Math.random() * 100);
+    setArr([...arr, newRandomNumber]);
+  };
+
+  useEffect(() => {
+    if (on) {
+      const startRandomNumberGeneration = () => {
+        setInterval(generateRandomNumber, 2000);
+      };
+
+      startRandomNumberGeneration();
+    }
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button
+        onClick={() => {
+          setOn(!on);
+        }}
+      >
+        Generate Random Number
+      </button>
+      {console.log(arr)}
+      {arr.map((num) => {
+        return <p>{num}</p>;
+      })}
     </div>
   );
 }
